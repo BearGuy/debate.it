@@ -1,0 +1,30 @@
+{
+  "name": "debate-it",
+  "version": "1.0.0",
+  "description": "A Node.js app that used to power Debate.it mobile app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BearGuy/debate.it.git"
+  },
+  "keywords": [
+    "node",
+    "backend",
+    "API",
+    "javascript"
+  ],
+  "author": "Stephen Peterkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BearGuy/debate.it/issues"
+  },
+  "homepage": "https://github.com/BearGuy/debate.it#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.5.8",
+    "body-parser": "~1.0.1"
+  }
+}
