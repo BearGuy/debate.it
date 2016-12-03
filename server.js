@@ -15,6 +15,47 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://superAdmin:4s5u5j@localhost/debater',{auth:{authdb:"admin"}});
 mongoose.set('debug', true);
 
+//This is the auth stuff here
+
+var jwtCheck = jwt({
+  secret: rsaValidation(),
+  algorithms: ['RS256'],
+  issuer: "https://debater-it.auth0.com/",
+  audience: 'https://debater-it.com'
+});
+
+// Enable the use of the jwtCheck middleware in all of our routes
+app.use(jwtCheck);
+
+// If we do not get the correct credentials, we’ll return an appropriate message
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({message:'Missing or invalid token'});
+  }
+});
+
+var guard = function(req, res, next){
+  // we’ll use a case switch statement on the route requested
+  switch(req.path){
+    // if the request is for movie reviews we’ll check to see if the token has general scope
+    case '/bears' : {
+      var permissions = ['general'];
+      for(var i = 0; i < permissions.length; i++){
+        if(req.user.scope.includes(permissions[i])){
+          next();
+        } else {
+          res.send(403, {message:'Forbidden'});
+        }
+      }
+      break;
+    }
+  }
+}
+
+app.use(guard)
+
+//This is where the auth stuff ends
+
 var router = express.Router()
 
 router.use(function(req, res, next) {
@@ -26,6 +67,7 @@ router.use(function(req, res, next) {
 router.get('/', function (req, res){
   res.json({ message: 'hooray! welcome to our api fam!' });
 });
+
 
 router.route('/bears')
 
