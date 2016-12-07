@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/BearGuy/debate.it.git"
+    "url": "git+ssh://git@github.com/BearGuy/TheMenWebDev/debate.it.git"
   },
   "keywords": [
     "node",
@@ -19,9 +19,9 @@
   "author": "Stephen Peterkins",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BearGuy/debate.it/issues"
+    "url": "https://github.com/BearGuy/TheMenWebDev/debate.it/issues"
   },
-  "homepage": "https://github.com/BearGuy/debate.it#readme",
+  "homepage": "https://github.com/BearGuy/TheMenWebDev/debate.it#readme",
   "dependencies": {
     "auth0-api-jwt-rsa-validation": "^0.0.1",
     "body-parser": "~1.0.1",
