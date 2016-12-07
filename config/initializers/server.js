@@ -1,13 +1,15 @@
 //To be used
-var express    = require('express');
-var app        = express();
-var path = require('path');
-var jwt = require('express-jwt');
+var express       = require('express');
+var app           = express();
+var path          = require('path');
+//var config        = require('nconf');
+
+var jwt           = require('express-jwt');
 var rsaValidation = require('auth0-api-jwt-rsa-validation');
 
-var bodyParser = require('body-parser');
-var Bear       = require('../../app/models/bear')
-var User      = require ('../../app/models/user')
+var bodyParser    = require('body-parser');
+var Bear          = require('../../app/models/bear')
+var User          = require ('../../app/models/user')
 
 var start = function(cb) {
 
@@ -25,8 +27,9 @@ var start = function(cb) {
     next(err);
   });
 
-  app.listen(8080);
-  console.log('The Magic is happening on port 8080')
+  var port = 8080//config.get('NODE_PORT')
+  app.listen(port);
+  console.log('The Magic is happening on port ' + port)
 
   if (cb){
     return cb
