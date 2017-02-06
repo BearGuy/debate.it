@@ -5,7 +5,7 @@ module.exports = function(cb) {
 
     var port = process.env.PORT || 8080 //set out port
 
-    var dbURI = 'mongodb://superAdmin:4s5u5j@localhost/debater';
+    var dbURI = `mongodb://${process.env.MONGODB_LOGIN}/debater`;
 
     console.log('Where do we die?')
     mongoose.connect(dbURI, {auth: {authdb:"admin"} });
