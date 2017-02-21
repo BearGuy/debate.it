@@ -40,8 +40,8 @@ var start = function(cb) {
   // development error handler
   // will print stacktra
 
-  var port = 8080 //config.get('NODE_PORT')
-  app.listen(port);
+  var port = 5000 //config.get('NODE_PORT')
+  app.listen(process.env.PORT || port);
   console.log('The Magic is happening on port ' + port)
 
   if (cb){
