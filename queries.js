@@ -7,7 +7,7 @@ var options = {
 
 var pgp = require('pg-promise')(options);
 var connectionString = 'postgres://localhost:5432/puppies';
-var db = pgp(connectionString);
+var db = pgp(process.env.DATABASE_URL || connectionString);
 
 // add query functions
 function getAllPuppies(req, res, next) {
