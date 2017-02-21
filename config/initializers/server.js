@@ -8,7 +8,7 @@ var jwt           = require('express-jwt');
 var rsaValidation = require('auth0-api-jwt-rsa-validation');
 
 var bodyParser    = require('body-parser');
-var cookieParser  = require('cookie-parser');
+// var cookieParser  = require('cookie-parser');
 
 var routes        = require('../../app/routes/index')
 // var Bear          = require('../../app/models/bear')
