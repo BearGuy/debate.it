@@ -1,8 +1,8 @@
 const db = require('../../config/initializers/database');
 
-const User = {
-  getAllUsers(req, res, next) {
-    db.any('select * from users')
+const Venue = {
+  getAllVenue(req, res, next) {
+    db.any('select * from venues')
     .then(function (data) {
       res.status(200)
         .json({
@@ -16,7 +16,7 @@ const User = {
     });
   },
 
-  getSingleUser(req, res, next) {
+  getSingleVenue(req, res, next) {
     var userID = parseInt(req.params.id);
     db.one('select * from users where id = $1', userID)
       .then(function (data) {
@@ -24,7 +24,7 @@ const User = {
           .json({
             status: 'success',
             data: data,
-            message: 'Retrieved ONE user'
+            message: 'Retrieved ONE puppy'
           });
       })
       .catch(function (err) {
@@ -32,7 +32,7 @@ const User = {
       });
   },
 
-  createUser(req, res, next) {
+  createVenue(req, res, next) {
     req.body.age = parseInt(req.body.age);
     db.none('insert into users(email, username, password)' +
         'values(${email}, ${username}, ${password})',
@@ -49,9 +49,9 @@ const User = {
       });
   },
 
-  updateUser(req, res, next) {
-    db.none('update users set email=$1, username=$2, password=$3, updated_at=$4 where id=$5',
-      [req.body.email, req.body.email, req.body.password, new Date(), parseInt(req.params.id)])
+  updateVenue(req, res, next) {
+    db.none('update users set email=$1, username=$2, password=$3 where id=$5',
+      [req.body.email, req.body.email, req.body.password, parseInt(req.params.id)])
       .then(function () {
         res.status(200)
           .json({
@@ -64,7 +64,7 @@ const User = {
       });
   },
 
-  removeUser(req, res, next) {
+  removeVenue(req, res, next) {
     var userID = parseInt(req.params.id);
     db.result('delete from pups where id = $1', userID)
       .then(function (result) {
@@ -72,7 +72,7 @@ const User = {
         res.status(200)
           .json({
             status: 'success',
-            message: `Removed ${result.rowCount} user`
+            message: `Removed ${result.rowCount} puppy`
           });
         /* jshint ignore:end */
       })
@@ -80,7 +80,6 @@ const User = {
         return next(err);
       });
   },
-};
+}
 
-// make this available to our users in our Node applications
-module.exports = User;
+module.exports = Venue;
