@@ -22,9 +22,6 @@ logger.info('[APP] Starting server initialization');
 
 // Initialize Modules
 async.series([
-  // function initializeDBConnection(callback) {
-  //   require('./config/initializers/database')(callback);
-  // },
   function startServer(callback) {
     server(callback);
   }], function(err) {

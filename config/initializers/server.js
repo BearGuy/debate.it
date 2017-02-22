@@ -8,11 +8,8 @@ var jwt           = require('express-jwt');
 var rsaValidation = require('auth0-api-jwt-rsa-validation');
 
 var bodyParser    = require('body-parser');
-// var cookieParser  = require('cookie-parser');
 
 var routes        = require('../../app/routes/index')
-// var Bear          = require('../../app/models/bear')
-// var User          = require ('../../app/models/user')
 
 var start = function(cb) {
 
@@ -38,9 +35,9 @@ var start = function(cb) {
   });
 
   // development error handler
-  // will print stacktra
+  // will print stacktrace
 
-  var port = 5000 //config.get('NODE_PORT')
+  var port = 8080 //config.get('NODE_PORT')
   app.listen(process.env.PORT || port);
   console.log('The Magic is happening on port ' + port)
 

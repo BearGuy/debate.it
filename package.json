@@ -1,5 +1,5 @@
 {
-  "name": "debate-it",
+  "name": "qrem-backend",
   "version": "1.0.0",
   "description": "A Node.js backend thats used to power Qrem web app, chatbot, and eventually mobile",
   "main": "app.js",
