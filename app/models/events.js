@@ -1,4 +1,5 @@
 const db = require('../../config/initializers/database');
+const dynaq = require('./helpers/dynamic_queries');
 const categories = require('./categories');
 
 const Events = {
@@ -34,15 +35,13 @@ const Events = {
   },
 
   createEvent(req, res, next) {
-    req.body.owner = parseInt(req.body.owner);
-    db.none('insert into events(title, description, item_url, image_url, category, venue_id, organization_id, starttime, endtime, created_by)' +
-        'values(${title}, ${description}, ${item_url}, ${image_url}, ${category}, ${venue_id}, ${organization_id}, ${starttime}, ${endtime}, ${created_by})',
-      req.body)
+    const { query_string, params } = dynaq.create('events', req);
+    db.none(query_string, params)
       .then( () => {
         res.status(200)
           .json({
             status: 'success',
-            message: 'Inserted one organization'
+            message: 'Inserted one event'
           });
       })
       .catch( (err) => {
@@ -51,13 +50,13 @@ const Events = {
   },
 
   updateEvent(req, res, next) {
-    const { query, params } = dynaq.dynamicUpdate('organizations', req);
+    const { query, params } = dynaq.update('events', req);
     db.none(query, params)
       .then( () => {
         res.status(200)
           .json({
             status: 'success',
-            message: 'Updated organization'
+            message: 'Updated event'
           });
       })
       .catch( (err) => {
@@ -67,13 +66,13 @@ const Events = {
 
   removeEvent(req, res, next) {
     var organizationID = parseInt(req.params.id);
-    db.result('delete from organizations where id = $1', organizationID)
+    db.result('delete from events where id = $1', organizationID)
       .then( (result) => {
         /* jshint ignore:start */
         res.status(200)
           .json({
             status: 'success',
-            message: `Removed ${result.rowCount} organization`
+            message: `Removed ${result.rowCount} event`
           });
         /* jshint ignore:end */
       })

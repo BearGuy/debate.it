@@ -2,9 +2,10 @@ var changeCase = require('change-case');
 var express = require('express');
 var router = express.Router();
 
-var user = require('../models/users');
-var venue = require('../models/venues');
-var organization = require('../models/organizations');
+const user = require('../models/users');
+const venue = require('../models/venues');
+const organization = require('../models/organizations');
+const event = require('../models/events');
 
 router.get('/api/users/', user.getAllUsers);
 router.get('/api/users/:id', user.getSingleUser);
@@ -23,5 +24,11 @@ router.get('/api/organizations/:id', organization.getSingleOrganization);
 router.post('/api/organizations/', organization.createOrganization);
 router.put('/api/organizations/:id', organization.updateOrganization);
 router.delete('/api/organizations/:id', organization.removeOrganization);
+
+router.get('/api/events/', event.getAllEvents);
+router.get('/api/events/:id', event.getSingleEvent);
+router.post('/api/events/', event.createEvent);
+router.put('/api/events/:id', event.updateEvent);
+router.delete('/api/events/:id', event.removeEvent);
 
 module.exports = router;

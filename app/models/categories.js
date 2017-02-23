@@ -9,4 +9,4 @@ const categories = {
   SPORTS: 'sport events'
 }
 
-export default categories
+module.exports = categories;

@@ -1,17 +1,19 @@
+const dynaq = require('./dynamic_queries');
+
 function eventParams(params) {
-  const m_params = [
-    title,
-    description,
-    item_url,
-    image_url,
-    category,
-    venue_id,
-    organization_id,
-    starttime,
-    endtime,
-    created_by
-  ]
-  return m_params
+  const event_params = {
+    title: params.title,
+    description: params.description || null,
+    item_url: params.item_url || null,
+    image_url: params.image_url || null,
+    category: params.category || null,
+    venue_id: params.venue_id || null,
+    organization_id: params.organization_id || null,
+    starttime: params.starttime || null,
+    endtime: params.endtime || null,
+    created_by: parseInt(params.created_by) || null
+  }
+  return event_params
 }
 
 function userParams(params) {
