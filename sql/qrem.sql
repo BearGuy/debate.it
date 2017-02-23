@@ -6,6 +6,7 @@ CREATE DATABASE qrem;
 CREATE TABLE venues (
   ID SERIAL PRIMARY KEY,
   title VARCHAR,
+  address VARCHAR,
   city VARCHAR,
   province VARCHAR,
   country VARCHAR,
@@ -31,7 +32,7 @@ CREATE TABLE organizations (
 
 CREATE TABLE events (
   ID SERIAL PRIMARY KEY,
-  name VARCHAR,
+  name NOT NULL VARCHAR,
   description VARCHAR,
   item_url VARCHAR,
   image_url VARCHAR,
