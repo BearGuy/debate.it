@@ -1,4 +1,5 @@
 const db = require('../../config/initializers/database');
+const dynaq = require('./helpers/dynamic_queries');
 
 const Users = {
   getAllUsers(req, res, next) {
@@ -49,8 +50,8 @@ const Users = {
   },
 
   updateUser(req, res, next) {
-    db.none('update users set email=$1, username=$2, password=$3, updated_at=$4 where id=$5',
-      [req.body.email, req.body.email, req.body.password, new Date(), parseInt(req.params.id)])
+    const { query, params } = dynaq.update('users', req);
+    db.none(query, params)
       .then( () => {
         res.status(200)
           .json({

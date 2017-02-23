@@ -1,4 +1,5 @@
 const db = require('../../config/initializers/database');
+const dynaq = require('./helpers/dynamic_queries');
 
 const Venues = {
   getAllVenues(req, res, next) {
@@ -51,18 +52,8 @@ const Venues = {
   },
 
   updateVenue(req, res, next) {
-    db.none('update venues set title=$1, address=$2, city=$3, province=$4, country=$5, lat=$6, long=$7, updated_at=$8 where id=$9',
-      [
-        req.body.title,
-        req.body.address,
-        req.body.city,
-        req.body.province,
-        req.body.country,
-        req.body.lat,
-        req.body.long,
-        new Date(),
-        parseInt(req.params.id)
-      ])
+    const { query, params } = dynaq.update('venues', req);
+    db.none(query, params)
       .then( () => {
         res.status(200)
           .json({
