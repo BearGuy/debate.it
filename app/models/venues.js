@@ -1,5 +1,5 @@
 const db = require('../../config/initializers/database');
-const dynaq = require('./helpers/dynamic_queries');
+const dynaq = require('./helpers/dynaq');
 
 const Venues = {
   getAllVenues(req, res, next) {

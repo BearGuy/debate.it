@@ -1,4 +1,4 @@
-const dynaq = require('./dynamic_queries');
+const dynaq = require('./dynaq');
 
 function eventParams(params) {
   const event_params = {
