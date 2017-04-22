@@ -7,28 +7,28 @@ const venue = require('../models/venues');
 const organization = require('../models/organizations');
 const event = require('../models/events');
 
-router.get('/api/users/', user.getAllUsers);
-router.get('/api/users/:id', user.getSingleUser);
-router.post('/api/users/', user.createUser);
-router.put('/api/users/:id', user.updateUser);
-router.delete('/api/users/:id', user.removeUser);
+router.get('/users/', user.getAllUsers);
+router.get('/users/:id', user.getSingleUser);
+router.post('/users/', user.createUser);
+router.put('/users/:id', user.updateUser);
+router.delete('/users/:id', user.removeUser);
 
-router.get('/api/venues/', venue.getAllVenues);
-router.get('/api/venues/:id', venue.getSingleVenue);
-router.post('/api/venues/', venue.createVenue);
-router.put('/api/venues/:id', venue.updateVenue);
-router.delete('/api/venues/:id', venue.removeVenue);
+router.get('/venues/', venue.getAllVenues);
+router.get('/venues/:id', venue.getSingleVenue);
+router.post('/venues/', venue.createVenue);
+router.put('/venues/:id', venue.updateVenue);
+router.delete('/venues/:id', venue.removeVenue);
 
-router.get('/api/organizations/', organization.getAllOrganizations);
-router.get('/api/organizations/:id', organization.getSingleOrganization);
-router.post('/api/organizations/', organization.createOrganization);
-router.put('/api/organizations/:id', organization.updateOrganization);
-router.delete('/api/organizations/:id', organization.removeOrganization);
+router.get('/organizations/', organization.getAllOrganizations);
+router.get('/organizations/:id', organization.getSingleOrganization);
+router.post('/organizations/', organization.createOrganization);
+router.put('/organizations/:id', organization.updateOrganization);
+router.delete('/organizations/:id', organization.removeOrganization);
 
-router.get('/api/events/', event.getAllEvents);
-router.get('/api/events/:id', event.getSingleEvent);
-router.post('/api/events/', event.createEvent);
-router.put('/api/events/:id', event.updateEvent);
-router.delete('/api/events/:id', event.removeEvent);
+router.get('/events/', event.getAllEvents);
+router.get('/events/:id', event.getSingleEvent);
+router.post('/events/', event.createEvent);
+router.put('/events/:id', event.updateEvent);
+router.delete('/events/:id', event.removeEvent);
 
 module.exports = router;
