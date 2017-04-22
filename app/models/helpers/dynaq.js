@@ -53,22 +53,22 @@ const dynaq = {
 
   create(table, req, next) {
     var $keys = [];
-    switch(table) {
-      case('events'):
-        var params = model_params.eventParams(req.body);
-        let params_array = _.toArray(_.keys(params))
-        var key_string = params_array.join(", ");
+    try {
+      switch(table) {
+        case('events'):
+          var params = model_params.eventParams(req.body);
+          let params_array = _.toArray(_.keys(params))
+          var key_string = params_array.join(", ");
 
-        _.each(params_array, (key, i) => {
-          $keys.push('${' + key + '}');
-        })
+          _.each(params_array, (key, i) => {
+            $keys.push('${' + key + '}');
+          })
 
-        var $key_string = $keys.join(", ");
-        break;
-      default:
-        break;
-    }
-    try{
+          var $key_string = $keys.join(", ");
+          break;
+        default:
+          break;
+      }
       query_string = `insert into ${table}(${key_string})values(${$key_string})`;
 
       return { query_string, params }
