@@ -1,7 +1,14 @@
-DROP DATABASE IF EXISTS qrem;
-CREATE DATABASE qrem;
+--qrem
 
-\c qrem;
+-- DROP DATABASE IF EXISTS qrem;
+-- CREATE DATABASE qrem;
+
+-- \c qrem;
+
+DROP TABLE IF EXISTS venues;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS organizations;
+DROP TABLE IF EXISTS events;
 
 CREATE TABLE venues (
   ID SERIAL PRIMARY KEY,
@@ -18,9 +25,9 @@ CREATE TABLE venues (
 
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
-  email NOT NULL VARCHAR,
-  username NOT NULL VARCHAR,
-  password NOT NULL VARCHAR,
+  email VARCHAR NOT NULL,
+  username VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
 
   event_ids INT[],
   created_at TIMESTAMP DEFAULT now(),
@@ -34,14 +41,14 @@ CREATE TABLE organizations (
   description VARCHAR,
 
   created_at TIMESTAMP DEFAULT now(),
-  updated_at TIMESTAMP DEFAULT now()
+  updated_at TIMESTAMP DEFAULT now(),
 
   FOREIGN KEY (owner) references users (ID)
 );
 
 CREATE TABLE events (
   ID SERIAL PRIMARY KEY,
-  name NOT NULL VARCHAR,
+  title VARCHAR NOT NULL,
   description VARCHAR,
   item_url VARCHAR,
   image_url VARCHAR,
