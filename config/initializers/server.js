@@ -4,25 +4,35 @@ var app           = express();
 var path          = require('path');
 //var config        = require('nconf');
 
-var jwt           = require('express-jwt');
+var expressJWT    = require('express-jwt');
+
+var jwt           = require('jsonwebtoken');
 var rsaValidation = require('auth0-api-jwt-rsa-validation');
 
 var bodyParser    = require('body-parser');
 
-var routes        = require('../../app/routes/index')
+var apiRoutes     = require('../../app/routes/index')
 
-//const homeHTML    = require('../../app/html/home.html');
+const secret      = require('../../app/auth/secret');
 
 var start = function(cb) {
 
   app.use(bodyParser.urlencoded({extended : true}));
   app.use(bodyParser.json());
 
+  app.use(expressJWT({ secret: secret }).unless({
+    path: ['/',
+      { url: '/api/events', methods: ['GET'] },
+      { url: '/api/auth', methods: ['POST'] },
+      { url: '/api/users', methods: ['POST'] }
+    ]
+  }));
+
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname+'/html/home.html'));
   });
 
-  app.use('/api', routes);
+  app.use('/api', apiRoutes);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

@@ -1,11 +1,17 @@
 var changeCase = require('change-case');
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
+
+const auth = require('../auth/auth');
+const secret = require('../auth/secret');
 
 const user = require('../models/users');
 const venue = require('../models/venues');
 const organization = require('../models/organizations');
 const event = require('../models/events');
+
+router.post('/auth/', auth.authSuperUser);
 
 router.get('/users/', user.getAllUsers);
 router.get('/users/:id', user.getSingleUser);

@@ -1,1 +1,2 @@
 .env
+/auth/secret.js
