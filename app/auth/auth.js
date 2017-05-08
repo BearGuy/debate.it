@@ -1,5 +1,6 @@
 const db = require('../../config/initializers/database');
 const dynaq = require('../models/helpers/dynaq');
+const encrypt = require('./encrypt');
 const secret = require('./secret');
 
 var jwt = require('jsonwebtoken');
@@ -21,21 +22,23 @@ const Auth = {
 
     db.one('select * from users where username = $1 or email = $1', userData)
       .then( (user) => {
-        if(user.password != req.body.password){
-          res.json({
-            success: false,
-            message: 'Authentication failed. Either username or password were incorrect'
-          })
-        } else {
-          var token = jwt.sign(user, secret);
+        //if(user.password != req.body.password){
+        let isPasswordMatch = encrypt.comparePassword(req.body.password, user.password);
+          if(isPasswordMatch){
+            res.json({
+              success: false,
+              message: 'Authentication failed. Either username or password were incorrect'
+            })
+          } else {
+            var token = jwt.sign(user, secret);
 
-          res.json({
-            success: true,
-            message: 'Token granted',
-            token: token
-          });
-        }
-      })
+            res.json({
+              success: true,
+              message: 'Token granted',
+              token: token
+            });
+          }
+        })
       .catch( (err) =>{
          res.json({
           success: false,

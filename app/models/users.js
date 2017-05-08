@@ -1,5 +1,6 @@
 const db = require('../../config/initializers/database');
 const dynaq = require('./helpers/dynaq');
+const encrypt = require('../auth/encrypt');
 
 const Users = {
   getAllUsers(req, res, next) {
@@ -34,19 +35,26 @@ const Users = {
   },
 
   createUser(req, res, next) {
-    db.none('insert into users(email, username, password)' +
-        'values(${email}, ${username}, ${password})',
-      req.body)
-      .then( () => {
-        res.status(200)
-          .json({
-            status: 'success',
-            message: 'Inserted one user'
-          });
-      })
-      .catch( (err) => {
-        return next(err);
-      });
+    encrypt.cryptPassword(req.body.password, (err, encrypted_password) => {
+      if (err) {
+        return res.json(err);
+      } else {
+      req.body.password = encrypted_password;
+      db.none('insert into users(email, username, password)' +
+          'values(${email}, ${username}, ${password})',
+        req.body)
+        .then( () => {
+          res.status(200)
+            .json({
+              status: 'success',
+              message: 'Inserted one user'
+            });
+        })
+        .catch( (err) => {
+          return next(err);
+        });
+      }
+    });
   },
 
   updateUser(req, res, next) {
