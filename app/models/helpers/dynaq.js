@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const db = require('../../../config/initializers/database');
 const model_params = require('./model_params');
+const squel = require('squel');
 
 const dynaq = {
   select(table, req, next) {
@@ -21,10 +22,51 @@ const dynaq = {
 
   selectAll(table, req, next) {
     try {
-      return req;
+      console.log(req.query);
+      if (!_.isEmpty(req.query)) {
+      // join is necessary for
+      // they can query for
+      // venue
+      // organization
+      // capacity
+      // interested
+      // attending
+      // startTime
+      // endTime
+      // user
+
+      // special cases are
+      // category
+      // venue
+      // org
+      // user
+      let query_string;
+      attribute = req.query;
+      attribute_type = Object.keys(req.query).toString();
+      //let params = req.query.forEach( (param) => {
+        if ( Object.keys(req.query).toString() == 'category') {
+          var category_string = squel.select()
+                                  .field('event')
+                                  .from("event_categories")
+                                  .where("category = ?", squel.select()
+                                                              .field('id')
+                                                              .from("categories")
+                                                              .where("type = ?", attribute[attribute_type]));
+
+          console.log(category_string.toString())
+          //return category_string.toString()
+        } else {
+        }
+     // })
+      //query_string = `select * from ${table} where `
+      //console.log(params);
+      return query_string = squel.select().from('events').where("id = ?", category_string)
+      } else {
+    return squel.select().from('events')
+  }
     }
     catch(err){
-      return next(err);
+      return err;
     }
   },
 

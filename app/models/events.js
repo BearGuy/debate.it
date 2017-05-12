@@ -4,7 +4,10 @@ const categories = require('./categories');
 
 const Events = {
   getAllEvents(req, res, next) {
-    db.any('select * from events')
+    //console.log(req.url);
+    const query = dynaq.selectAll('events', req).toString();
+    console.log(query);
+    db.any(query)
     .then( (data) => {
       res.status(200)
         .json({

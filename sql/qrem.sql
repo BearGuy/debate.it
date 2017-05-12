@@ -52,7 +52,7 @@ CREATE TABLE events (
   description VARCHAR,
   item_url VARCHAR,
   image_url VARCHAR,
-  category VARCHAR,
+  category_id INT,
   venue_id INT,
   organization_id INT,
   capacity INT,
@@ -65,6 +65,7 @@ CREATE TABLE events (
   created_at TIMESTAMP DEFAULT now(),
   update_at TIMESTAMP DEFAULT now(),
 
+  FOREIGN KEY (category_id) references categories (ID),
   FOREIGN KEY (venue_id) references venues (ID),
   FOREIGN KEY (organization_id) references organizations (ID),
   FOREIGN KEY (created_by) references users (ID)
