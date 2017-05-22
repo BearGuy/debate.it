@@ -24,6 +24,8 @@ const dynaq = {
     try {
       console.log(req.query);
       if (!_.isEmpty(req.query)) {
+      // PASS ARGUMENT TO SORT BY POPULARITY, PROXIMITY, AND TIME
+
       // join is necessary for
       // they can query for
       // venue
@@ -41,28 +43,59 @@ const dynaq = {
       // org
       // user
       let query_string;
-      attribute = req.query;
-      attribute_type = Object.keys(req.query).toString();
-      //let params = req.query.forEach( (param) => {
-        if ( Object.keys(req.query).toString() == 'category') {
-          var category_string = squel.select()
+      let attribute = req.query;
+      let attribute_type = Object.keys(req.query)
+      let attribute_hash={};
+      attribute_type.forEach( (tag) => {
+        //if ( Object.keys(tag).toString() == 'category') {
+        switch(tag) {
+          case('category'):
+            attribute_hash[tag]=(squel.select()
                                   .field('event')
                                   .from("event_categories")
                                   .where("category = ?", squel.select()
                                                               .field('id')
                                                               .from("categories")
-                                                              .where("type = ?", attribute[attribute_type]));
-
-          console.log(category_string.toString())
-          //return category_string.toString()
-        } else {
+                                                              .where("type = ?", attribute[tag])));
+            break;
+          case('venue'):
+            attribute_hash[tag]=(squel.select()
+                                  .field('id')
+                                  .from('venues')
+                                  .where("title = ?", attribute[tag]));
+            break;
+          case('organization'):
+            attribute_hash[tag]=(squel.select()
+                                  .field('id')
+                                  .from('organizations')
+                                  .where("title = ?", attribute[tag]));
+            break;
+          case('sort'):
+          //order by squel
+            break;
+          default:
+            break;
         }
-     // })
-      //query_string = `select * from ${table} where `
-      //console.log(params);
-      return query_string = squel.select().from('events').where("id = ?", category_string)
+      });
+      console.log(Object.prototype.toString.call(attribute_hash));
+      //console.log(attribute_hash.pop().toString());
+      query_string = squel.select().from('events')
+
+      if (attribute_hash['category'] !== undefined) {
+        query_string = query_string.where("id = ?", attribute_hash['category']);
+      }
+      if (attribute_hash['venue']!== undefined){
+        query_string = query_string.where("id = ?", attribute_hash['venue']);
+      }
+      if (attribute_hash['organization'] !== undefined){
+        query_string = query_string.where("id = ?", attribute_hash['organization']);
+      }
+
+
+      console.log(query_string.toString());
+      return query_string
       } else {
-    return squel.select().from('events')
+    return squel.select().from(table);
   }
     }
     catch(err){
