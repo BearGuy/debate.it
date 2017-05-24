@@ -1,10 +1,10 @@
 const db = require('../../config/initializers/database');
 const dynaq = require('./helpers/dynaq');
+const mp = require('./helpers/model_params');
 const categories = require('./categories');
 
 const Events = {
   getAllEvents(req, res, next) {
-    //console.log(req.url);
     const query = dynaq.selectAll('events', req).toString();
     console.log(query);
     db.any(query)
@@ -25,11 +25,17 @@ const Events = {
     var eventID = parseInt(req.params.id);
     db.one('select * from events where id = $1', eventID)
       .then( (data) => {
-        res.status(200)
-          .json({
-            status: 'success',
-            data: data,
-            message: 'Retrieved ONE event'
+        mp.eventParams(data)
+          .then((event_param_data) =>{
+            res.status(200)
+            .json({
+              status: 'success',
+              data: event_param_data,
+              message: 'Retrieved ONE event'
+            });
+          })
+          .catch((err) =>{
+            return next(err);
           });
       })
       .catch( (err) => {
