@@ -8,13 +8,18 @@ const Events = {
     const query = dynaq.selectAll('events', req).toString();
     console.log(query);
     db.any(query)
-    .then( (data) => {
-      res.status(200)
-        .json({
-          status: 'Success',
-          data: data,
-          message: 'Retrieved ALL events'
-        });
+    .then((data) => {
+      // let eventList = data.map(event => mp.eventParams(event))
+      // console.log(eventList);
+      Promise.all(data.map(event => mp.eventParams(event)))
+        .then((events) => {
+          res.status(200)
+          .json({
+            status: 'Success',
+            data: events,
+            message: 'Retrieved ALL events'
+          });
+      })
     })
     .catch( (err) => {
       return next(err);

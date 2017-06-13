@@ -2,6 +2,7 @@
 var express       = require('express');
 var app           = express();
 var path          = require('path');
+var cors          = require('cors');
 //var config        = require('nconf');
 
 var expressJWT    = require('express-jwt');
@@ -16,6 +17,8 @@ var apiRoutes     = require('../../app/routes/index')
 const secret      = require('../../app/auth/secret');
 
 var start = function(cb) {
+
+  app.use(cors());
 
   app.use(bodyParser.urlencoded({extended : true}));
   app.use(bodyParser.json());

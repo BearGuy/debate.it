@@ -60,12 +60,6 @@ function venueParams(params) {
 }
 
 function organizationParams(organization_string) {
-  // let organization_string = squel.select()
-  //                               .from('organizations')
-  //                               .where("id = ?", params.id);
-
-  console.log(organization_string);
-
   return getOrganizationData(organization_string)
     .then((org_data) =>{
       return {
@@ -89,7 +83,7 @@ function organizationParams(organization_string) {
 function getEventData(attribute_hash){
   cateogory_promise = db.any(attribute_hash['category'].toString());
   venue_promise = db.any(attribute_hash['venue'].toString());
-  organization_promise = getOrganizationData(attribute_hash['organization'].toString()); //db.any(attribute_hash['organization'].toString());
+  organization_promise = getOrganizationData(attribute_hash['organization'].toString());
 
   promise_array = [cateogory_promise, venue_promise, organization_promise];
 
@@ -119,15 +113,22 @@ function getOrganizationData(organization_string) {
       let owner_promise = db.one(owner_string.toString());
       let member_promise = db.any(members_string.toString());
 
-      console.log('This is the response data: ' + res);
-
       return Promise.all([owner_promise, member_promise])
         .then((org_data) =>{
+          var safe_members = org_data[1].map((member) =>{
+            return {
+              email: member.email,
+              username: member.username,
+              created_at: member.created_at,
+              updated_at: member.updated_at
+            }
+          });
+
           return {
             id: res.id || null,
             title: res.title || null,
             owner: org_data[0] || null,
-            members: org_data[1] || null,
+            members: safe_members || null,
             description: res.description || null,
             website_url: res.website_url || null,
             fb_page_url: res.fb_page_url || null,
@@ -149,8 +150,8 @@ function getVenueData(attribute_hash){
 
 }
 
-function getUserData(attribute_hash) {
-
+function getUserData(user_string) {
+  return db.one(user_string.toString())
 }
 
 function getCategoryData(category_string){
