@@ -60,7 +60,7 @@ const Events = {
           });
       })
       .catch( (err) => {
-        return next(err);
+        return err;
       });
   },
 
