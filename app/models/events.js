@@ -49,6 +49,7 @@ const Events = {
   },
 
   createEvent(req, res, next) {
+    console.log(req);
     const { query_string, params } = dynaq.create('events', req);
     db.none(query_string, params)
       .then( () => {
