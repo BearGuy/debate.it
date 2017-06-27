@@ -149,7 +149,7 @@ const dynaq = {
       return { query_string, params }
     }
     catch(err) {
-      return next(err);
+      return err;
     }
   },
 }
