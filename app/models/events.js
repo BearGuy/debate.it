@@ -50,7 +50,7 @@ const Events = {
 
   createEvent(req, res, next) {
     console.log(req.body);
-    const { query_string, params } = dynaq.create('events', req.body);
+    const { query_string, params } = dynaq.create('events', req);
     db.none(query_string, params)
       .then( () => {
         res.status(200)
