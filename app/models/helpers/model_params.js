@@ -48,6 +48,46 @@ function eventParams(params) {
     });
 }
 
+function eventCreateParams(params) {
+  // let attribute_hash={};
+  // attribute_hash['category'] = squel.insert()
+  //                                   .field()
+
+  //                             squel.select()
+  //                                     .field('type')
+  //                                     .from("categories")
+  //                                     .where("id = ?", squel.select()
+  //                                                             .field('category')
+  //                                                             .from("event_categories")
+  //                                                             .where("event = ?", params.id));
+
+  // //attribute_hash['venue'] = squel.select().from('venues').where("id = ?", params.venue_id);
+  // attribute_hash['organization'] = squel.select()
+  //                                         .from('organizations')
+  //                                         .where("id = ?", params.organization_id);
+  return {
+    title: params.title,
+    description: params.description || null,
+    item_url: params.item_url || null,
+    fb_event_url: params.fb_event_url || null,
+    image_url: params.image_url || null,
+    category: params.category_id || null,
+    venue_id: params.venue_id || null,
+    organization: params.organization_id || null,
+    sub_events: params.sub_events || null,
+    cost: params.cost || null,
+    capacity: params.capacity || null,
+    interested: params.interested || null,
+    attending: params.attending || null,
+    all_day: params.all_day || null,
+    recurring: params.recurring || null,
+    starttime: params.starttime || null,
+    endtime: params.endtime || null,
+    created_by: parseInt(params.created_by) || null,
+    updated_at: parseInt(params.updated_at) || null
+  }
+}
+
 function userParams(params) {
   return params
 }
@@ -158,4 +198,4 @@ function getCategoryData(category_string){
 
 }
 
-module.exports = { eventParams, userParams, venueParams, organizationParams}
+module.exports = { eventParams, eventCreateParams, userParams, venueParams, organizationParams}

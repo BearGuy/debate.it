@@ -128,23 +128,41 @@ const dynaq = {
 
   create(table, req, next) {
     var $keys = [];
+    var params_values;
+    var setCreateFields = {};
     try {
       switch(table) {
         case('events'):
-          var params = model_params.eventParams(req.body);
-          let params_array = _.toArray(_.keys(params))
-          var key_string = params_array.join(", ");
+          // var params = model_params.eventCreateParams(req.body);
+          // let params_array = _.toArray(_.keys(params))
+          let params_array = _.toArray(_.keys(req.body))
+          params_values = _.toArray(_.values(req.body))
+          // var key_string = params_array.join(", ");
+
+          // console.log(params_array);
+
+          // _.each(params_array, (key, i) => {
+          //   $keys.push('${' + key + '}');
+          // })
 
           _.each(params_array, (key, i) => {
-            $keys.push('${' + key + '}');
+            console.log(key)
+            var num = i + 1;
+            setCreateFields[key] = (`$ + ${num}`)
           })
 
-          var $key_string = $keys.join(", ");
+          // var $key_string = $keys.join(", ");
           break;
         default:
           break;
       }
-      query_string = `insert into ${table}(${key_string})values(${$key_string})`;
+      //query_string = `insert into ${table}(${key_string})values(${$key_string})`;
+      query_string = squel.insert()
+                          .into(table)
+                          .setFields(req.body)
+                          .toString()
+
+      params = [] // params_values
 
       return { query_string, params }
     }

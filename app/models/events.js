@@ -51,8 +51,11 @@ const Events = {
   createEvent(req, res, next) {
     console.log(req.body);
     const { query_string, params } = dynaq.create('events', req);
-    db.none(query_string, params)
+    console.log(query_string)
+    console.log(params)
+    db.none(query_string, params) //
       .then( () => {
+        console.log("Are we here?")
         res.status(200)
           .json({
             status: 'success',
