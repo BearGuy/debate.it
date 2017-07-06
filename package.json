@@ -2,10 +2,10 @@
   "name": "qrem-backend",
   "version": "1.0.0",
   "description": "A Node.js backend thats used to power Qrem web app, chatbot, and eventually mobile",
-  "main": "./config/initializers/server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./config/initializers/server.js",
+    "start": "node app.js",
     "dev": "node debug ./config/initializers/server.js"
   },
   "repository": {
