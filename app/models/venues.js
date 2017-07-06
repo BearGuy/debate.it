@@ -36,9 +36,9 @@ const Venues = {
   createVenue(req, res, next) {
     req.body.lat = parseFloat(req.body.lat) || null;
     req.body.long = parseFloat(req.body.long) || null;
-    db.none('insert into venues(title, address, city, province, country, lat, long)' +
-        'values(${title}, ${address}, ${city}, ${province}, ${country}, ${lat}, ${long})',
-      req.body)
+    const { query_string, params } = dynaq.create('venues', req);
+    console.log(query_string)
+    db.none(query_string, params)
       .then( () => {
         res.status(200)
           .json({

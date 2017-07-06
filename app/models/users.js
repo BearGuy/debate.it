@@ -40,9 +40,9 @@ const Users = {
         return res.json(err);
       } else {
       req.body.password = encrypted_password;
-      db.none('insert into users(email, username, password)' +
-          'values(${email}, ${username}, ${password})',
-        req.body)
+      const { query_string, params } = dynaq.create('users', req);
+      console.log(query_string)
+      db.none(query_string, params)
         .then( () => {
           res.status(200)
             .json({

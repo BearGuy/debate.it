@@ -153,6 +153,9 @@ const dynaq = {
 
           // var $key_string = $keys.join(", ");
           break;
+        case('organizations'):
+          break;
+
         default:
           break;
       }
@@ -161,6 +164,8 @@ const dynaq = {
                           .into(table)
                           .setFields(req.body)
                           .toString()
+
+      console.log(query_string)
 
       params = [] // params_values
 

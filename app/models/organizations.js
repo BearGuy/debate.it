@@ -35,9 +35,9 @@ const Organizations = {
 
   createOrganization(req,res,next) {
     req.body.owner = parseInt(req.body.owner);
-    db.none('insert into organizations(title, owner, description)' +
-        'values(${title}, ${owner}, ${description})',
-      req.body)
+    const { query_string, params } = dynaq.create('organizations', req);
+    console.log(query_string)
+    db.none(query_string, params)
       .then( () => {
         res.status(200)
           .json({
@@ -51,7 +51,7 @@ const Organizations = {
   },
 
   updateOrganization(req,res,next) {
-    const { query, params } = dynaq.dynamicUpdate('organizations', req);
+    const { query, params } = dynaq.update('organizations', req);
     db.none(query, params)
       .then( () => {
         res.status(200)
